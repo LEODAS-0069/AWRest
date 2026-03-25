@@ -1,0 +1,14 @@
+Flask==2.3.3
+Flask-CORS==4.0.0
+Tornado==6.3.3
+pymongo==4.5.0
+boto3==1.28.50
+psycopg2-binary==2.9.7
+python-dotenv==1.0.0
+gradio==4.11.0
+openai==0.28.0
+langchain==0.0.350
+tiktoken==0.5.1
+gunicorn==21.2.0
+requests==2.31.0
+pydantic==2.4.2

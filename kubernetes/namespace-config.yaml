@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: labubu-marketplace
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pvc
+  namespace: labubu-marketplace
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: standard
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: labubu-marketplace
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: standard
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: labubu-config
+  namespace: labubu-marketplace
+data:
+  FLASK_ENV: "production"
+  MONGO_HOST: "mongodb"
+  MONGO_PORT: "27017"
+  MONGO_DB: "labubu_listings"
+  AWS_REGION: "us-east-1"
+  DYNAMODB_ORDERS_TABLE: "labubu_orders"
+  TORNADO_SERVICE_URL: "http://tornado-service:8001"
+  CHATBOT_SERVICE_URL: "http://chatbot-service:7860"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: labubu-secrets
+  namespace: labubu-marketplace
+type: Opaque
+stringData:
+  DATABASE_URL: "postgresql://labubu_user:labubu_password@postgres:5432/labubu_chatbot"
+  OPENAI_API_KEY: "sk-your-openai-key-here"
+  AWS_ACCESS_KEY_ID: "your-aws-access-key"
+  AWS_SECRET_ACCESS_KEY: "your-aws-secret-key"
+  SECRET_KEY: "your-flask-secret-key"

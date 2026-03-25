@@ -1,0 +1,42 @@
+{
+  "build": {
+    "builder": "dockerfile",
+    "context": "."
+  },
+  "deploy": {
+    "restartPolicy": "on_failure",
+    "numReplicas": 1,
+    "healthchecks": {
+      "liveness": {
+        "type": "http",
+        "path": "/health",
+        "initialDelaySeconds": 10,
+        "periodSeconds": 30
+      },
+      "readiness": {
+        "type": "http",
+        "path": "/health",
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10
+      }
+    }
+  },
+  "variables": {
+    "FLASK_ENV": {
+      "description": "Flask environment",
+      "value": "production"
+    },
+    "MONGO_HOST": {
+      "description": "MongoDB hostname",
+      "value": "mongo"
+    },
+    "MONGO_PORT": {
+      "description": "MongoDB port",
+      "value": "27017"
+    },
+    "OPENAI_API_KEY": {
+      "description": "Your OpenAI API Key",
+      "value": ""
+    }
+  }
+}
